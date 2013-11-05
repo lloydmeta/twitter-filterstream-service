@@ -20,11 +20,11 @@ object Application extends Controller {
   val asJson: Enumeratee[twitter4j.Status, JsValue] = Enumeratee.map[twitter4j.Status] {
     twitterStatus =>
       Json.obj(
-        "event" -> "twitterStatus",
+        "event" -> "message",
         "status" -> Json.obj(
-          "username" -> twitterStatus.getUser.getScreenName,
-          "user_image" -> twitterStatus.getUser.getProfileImageURLHttps,
-          "created_at" -> twitterStatus.getCreatedAt,
+          "userName" -> twitterStatus.getUser.getScreenName,
+          "userImage" -> twitterStatus.getUser.getProfileImageURLHttps,
+          "createdAt" -> twitterStatus.getCreatedAt,
           "text" -> twitterStatus.getText
         ))
   }
