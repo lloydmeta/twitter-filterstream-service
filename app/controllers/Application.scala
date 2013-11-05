@@ -30,7 +30,7 @@ object Application extends Controller {
   }
 
   def filterStream(terms: String) = Action {
-    val jsonFilterStream = FilterStreamSubscription(terms.split(",").map(_.trim).toList).enumerator &> asJson
-    Ok.feed(jsonFilterStream &> EventSource()).as("text/event-stream")
+    Ok.feed(
+      FilterStreamSubscription(terms.split(",").map(_.trim).toList).enumerator &> asJson &> EventSource()).as("text/event-stream")
   }
 }
