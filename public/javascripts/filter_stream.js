@@ -16,8 +16,8 @@ var relevantIds = {
 
 var prependToStatusList = function (userName, userImage, text, createdAt) {
   var statusList = $(relevantIds.statusList);
-  statusList.prepend("<li>" + userName + " said: " + text + "</li>");
-  if ($(relevantIds.statusList + " li").length > 20) {
+  statusList.prepend("<li><blockquote>" + text + "<small>"+ userName + "</small></blockquote></li>");
+  if ($(relevantIds.statusList + " li").length > 15) {
     $(relevantIds.statusList + ' li:last').remove();
   };
 };
@@ -54,7 +54,7 @@ var setUpChart = function (terms){
     },
     yAxis: {
       title: {
-        text: 'Tweets'
+        text: 'Number of Tweets'
       },
       plotLines: [{
         value: 0,
@@ -76,13 +76,11 @@ var setUpChart = function (terms){
       enabled: false
     },
     series: [{
-      name: 'Random data',
+      name: 'Number of Tweets',
       data: [ { x: currentMinuteRounded(1), y: 0 } ]
     }]
   });
 };
-
-
 
 $(relevantIds.goForm).submit(function(event) {
   if(typeof(EventSource)!=="undefined")
@@ -90,6 +88,7 @@ $(relevantIds.goForm).submit(function(event) {
     var termsList = $(relevantIds.termsList).val();
     if (typeof(currentEventSource)!=="undefined"){
       // Cleanup
+      $(relevantIds.statusList).empty();
       currentEventSource.close();
     }
     setUpChart(termsList);
