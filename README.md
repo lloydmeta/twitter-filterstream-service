@@ -31,4 +31,6 @@ TWITTER_CONSUMERSECRET
 TWITTER_ACCESSTOKEN
 TWITTER_ACCESSTOKENSECRET
 
-They should correspond to your app's set of credentials can be found on [your Twitter Dev app page](https://dev.twitter.com/apps)
+They should correspond to your app's set of credentials can be found on [your Twitter Dev app page](https://dev.twitter.com/apps).
+
+If you don't want to set the above environment variables, you can fill in the values in `conf/application.conf`, but keep in mind that you'll be committing your credentials into version control, which may or may not be sub-optimal.
