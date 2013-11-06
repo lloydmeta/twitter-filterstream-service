@@ -9,6 +9,7 @@
         <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
         <script src="@routes.Assets.at("javascripts/jquery-1.9.0.min.js")" type="text/javascript"></script>
         <script src="@routes.Assets.at("javascripts/filter_stream.js")" type="text/javascript"></script>
+        <script src="@routes.Assets.at("javascripts/highcharts.js")" type="text/javascript"></script>
     </head>
     <body>
     <div class="container">
@@ -30,7 +31,9 @@
                <ul id="statusList">
                </ul>
             </div>
-            <div id="graph" class="col-md-9">.col-md-9
+            <div class="col-md-9">
+               <div id="graph" style="width:100%;">
+               </div>
             </div>
         </div>
     </div>
