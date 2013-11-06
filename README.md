@@ -17,11 +17,11 @@ Languages / Libraries / frameworks used:
 Example
 -------
 
-Deployed on Heroku at [twitter-filterstream.herokuapp.com/](http://twitter-filterstream.herokuapp.com/)
+Deployed on Heroku at [twitter-filterstream.herokuapp.com/](http://twitter-filterstream.herokuapp.com/). Unfortunately, there may be some kinks with server-sent events and Heroku, so if the deployed app is broken, try cloning this repo locally and running it.
 
-Enter a comma-separated list of terms and tweets that have any one of those words will appear and be counted in the graph.
+At the main page, enter a comma-separated list of terms, click go and tweets that have any one of those words will appear and be counted in the graph.
 
-On deployment
+On running/deploying this app
 -------------
 
 At the moment, this app uses one set of credentials taken from the environment variables. As such, please make sure the following are set in your environment:
