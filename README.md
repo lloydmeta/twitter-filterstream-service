@@ -13,7 +13,12 @@ Languages / Libraries / frameworks used:
 - Twitter4J library
 - Javascript (w/ JQuery + Highcharts)
 
+Example
+-------
+
 Deployed on Heroku at [twitter-filterstream.herokuapp.com/](http://twitter-filterstream.herokuapp.com/)
+
+Enter a comma-separated list of terms and tweets that have any one of those words will appear and be counted in the graph.
 
 On deployment
 -------------
