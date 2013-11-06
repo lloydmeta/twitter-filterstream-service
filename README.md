@@ -31,4 +31,4 @@ TWITTER_CONSUMERSECRET
 TWITTER_ACCESSTOKEN
 TWITTER_ACCESSTOKENSECRET
 
-They should correspond to your app's set of credentials can be found from [your Twitter Dev app page](https://dev.twitter.com/apps)
+They should correspond to your app's set of credentials can be found on [your Twitter Dev app page](https://dev.twitter.com/apps)
