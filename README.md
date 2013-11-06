@@ -9,6 +9,7 @@ Demo Scala application from a combination of:
 Languages / Libraries / frameworks used:
 
 - Akka
+- Twitter Bootstrap
 - Play 2
 - Twitter4J library
 - Javascript (w/ JQuery + Highcharts)
