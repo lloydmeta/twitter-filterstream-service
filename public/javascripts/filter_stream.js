@@ -86,14 +86,20 @@ $(relevantIds.goForm).submit(function(event) {
   if(typeof(EventSource)!=="undefined")
   {
     var termsList = $(relevantIds.termsList).val();
+
+    // Just in case, cleanup
     if (typeof(currentEventSource)!=="undefined"){
-      // Cleanup
       $(relevantIds.statusList).empty();
       currentEventSource.close();
     }
+
+    // Set up the chart and remove the form
     setUpChart(termsList);
+    $(relevantIds.goForm).remove();
 
     currentEventSource = new EventSource("/filterStream/" + termsList);
+
+    // Setup listeners on the EventSource
     currentEventSource.addEventListener('open', function (e) {
       console.log("connection opened");
     }, false);
@@ -104,6 +110,15 @@ $(relevantIds.goForm).submit(function(event) {
       console.log("new status received");
       prependToStatusList(tweet.userName, tweet.userImage, tweet.text, tweet.createdAt);
       incrementChartData($(relevantIds.graph).highcharts());
+    }, false);
+
+    currentEventSource.addEventListener('error', function (e) {
+      if (e.readyState == EventSource.CLOSED) {
+        $(relevantIds.statusList).empty();
+        alert("Your connection was closed");
+      } else {
+        alert("An unknown error occured");
+      }
     }, false);
 
   }
