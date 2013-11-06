@@ -101,13 +101,13 @@ $(relevantIds.goForm).submit(function(event) {
 
     // Setup listeners on the EventSource
     currentEventSource.addEventListener('open', function (e) {
-      console.log("connection opened");
+      console.log("Connection opened");
     }, false);
 
     currentEventSource.addEventListener('message', function (e) {
       var data = JSON.parse(e.data);
       var tweet = data.status;
-      console.log("new status received");
+      console.log("New status received");
       prependToStatusList(tweet.userName, tweet.userImage, tweet.text, tweet.createdAt);
       incrementChartData($(relevantIds.graph).highcharts());
     }, false);
@@ -120,6 +120,11 @@ $(relevantIds.goForm).submit(function(event) {
         alert("An unknown error occured");
       }
     }, false);
+
+    window.onbeforeunload = function(){
+      console.log('Closing connection on reload');
+      currentEventSource.close();
+    };
 
   }
   else
