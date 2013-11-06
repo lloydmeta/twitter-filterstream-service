@@ -12,3 +12,5 @@ Languages / Libraries / frameworks used:
 - Play 2
 - Twitter4J library
 - Javascript (w/ JQuery + Highcharts)
+
+Deployed on Heroku at [twitter-filterstream.herokuapp.com/](http://twitter-filterstream.herokuapp.com/)
