@@ -24,11 +24,11 @@ At the main page, enter a comma-separated list of terms, click go and tweets tha
 On running/deploying this app
 -------------
 
-At the moment, this app uses one set of credentials taken from the environment variables. As such, please make sure the following are set in your environment:
+At the moment, this app uses one set of credentials taken from your environment variables. As such, please make sure the following are set in your environment:
 
 TWITTER_CONSUMERKEY
 TWITTER_CONSUMERSECRET
 TWITTER_ACCESSTOKEN
 TWITTER_ACCESSTOKENSECRET
 
-They can be found from [your Twitter Dev app page](https://dev.twitter.com/apps)
+They should correspond to your app's set of credentials can be found from [your Twitter Dev app page](https://dev.twitter.com/apps)
