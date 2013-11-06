@@ -102,7 +102,6 @@ $(relevantIds.goForm).submit(function(event) {
       var data = JSON.parse(e.data);
       var tweet = data.status;
       console.log("new status received");
-      console.log(tweet);
       prependToStatusList(tweet.userName, tweet.userImage, tweet.text, tweet.createdAt);
       incrementChartData($(relevantIds.graph).highcharts());
     }, false);
