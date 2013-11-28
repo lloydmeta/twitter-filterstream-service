@@ -2,35 +2,26 @@ package controllers
 
 import play.api._
 import play.api.mvc._
-import models.FilterStreamSubscription
+import models._
 
-import play.api.libs.iteratee.Enumeratee
-import play.api.libs.json.{JsValue, Json}
 import play.api.libs.EventSource
 import play.api.libs.concurrent.Execution.Implicits._
 
 object Application extends Controller {
 
-
   def index = Action {
-    Ok(views.html.index("Your new application is ready."))
+    Ok(views.html.index())
   }
 
-  // Adapter from a stream of twitter4j Status to a stream of JsObject, to generate Json content.
-  val asJson: Enumeratee[twitter4j.Status, JsValue] = Enumeratee.map[twitter4j.Status] {
-    twitterStatus =>
-      Json.obj(
-        "event" -> "message",
-        "status" -> Json.obj(
-          "userName" -> twitterStatus.getUser.getScreenName,
-          "userImage" -> twitterStatus.getUser.getProfileImageURLHttps,
-          "createdAt" -> twitterStatus.getCreatedAt,
-          "text" -> twitterStatus.getText
-        ))
+  def newTerms(terms: String) = Action {
+    FilterStreamRoom.newTerms(terms.split(",").map(_.trim).toList)
+    Ok
   }
 
-  def filterStream(terms: String) = Action {
-    Ok.feed(
-      FilterStreamSubscription(terms.split(",").map(_.trim).toList).enumerator &> asJson &> EventSource()).as("text/event-stream")
+  def connect = Action.async {
+    FilterStreamRoom.connect.map {
+      filterStreamEnumerator =>
+        Ok.feed(filterStreamEnumerator &> EventSource()).as("text/event-stream")
+    }
   }
 }

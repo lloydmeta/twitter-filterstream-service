@@ -15,7 +15,8 @@
     <div class="container">
         <div class="row">
             <h1>@title</h1>
-            <h3><small>Insert a comma-separated list of terms and click Go</small></h3>
+            <h3><small>Welcome to the Twitter FilterStream Room. Anyone visiting sees the same filtered stream of Tweets.</small></h3>
+            <h3><small>If you want to the terms to filter on, insert a comma-separated list of terms and click Go</small></h3>
             <h3><small>Tweets that contain any one of the terms will show up.</small></h3>
         </div>
         <div class="row">
@@ -34,7 +35,10 @@
                </ul>
             </div>
             <div class="col-md-9">
-               <div id="graph" style="width:100%;">
+               <div id="status" style="display: none">
+                   <span id="msg"></span>
+               </div>
+               <div id="graph" style="width: 100%;">
                </div>
             </div>
         </div>

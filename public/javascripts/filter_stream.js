@@ -6,14 +6,23 @@ Highcharts.setOptions({
     }
 });
 
-var currentEventSource = undefined;
 var relevantIds = {
+    status: "#status",
     termsList: "#termsList",
     statusList: "#statusList",
     graph: "#graph",
     goForm: "#goForm"
 };
 
+// Clears the status list
+var clearStatusList = function() {
+ $(relevantIds.statusList).empty();
+}
+
+// current terms being looked at
+var currentTerms = undefined;
+
+// Handles prepending of newly received tweets to the Tweets/status list
 var prependToStatusList = function (userName, userImage, text, createdAt) {
   var statusList = $(relevantIds.statusList);
   statusList.prepend("<li><blockquote>" + text + "<small>"+ userName + "</small></blockquote></li>");
@@ -22,12 +31,14 @@ var prependToStatusList = function (userName, userImage, text, createdAt) {
   };
 };
 
+// Rounds the current time to the nearst X minutes
 var currentMinuteRounded = function (nearestXMinutes) {
   var coeff = 1000 * 60 * nearestXMinutes;
   var date = new Date();  //or use any other date
   return new Date(Math.round(date.getTime() / coeff) * coeff);
 };
 
+// Handles incrementing of chart data
 var incrementChartData = function (chart) {
   var currentInterval = currentMinuteRounded(1);
   var currentLastDataPoint = chart.series[0].data[chart.series[0].data.length - 1];
@@ -36,6 +47,40 @@ var incrementChartData = function (chart) {
     currentLastDataPoint.update(currentYValueAtInterval + 1);
   } else {
     chart.series[0].addPoint({ x: currentInterval, y: 1 }, true, false);
+  }
+};
+
+// Resets the status list and the chart
+var cleanSlateWithTerms = function (newTerms) {
+  console.log("new terms in cleanslatewith terms: " + newTerms);
+  currentTerms = newTerms;
+  setUpChart(newTerms.join(", "));
+  clearStatusList();
+};
+
+// Handles setting a quick "flash" message that fades out
+var flashStatus = function (message) {
+  var statusDiv = $(relevantIds.status);
+  statusDiv.find('span#msg').html(message);
+  statusDiv.show(250).fadeOut(4000);
+}
+
+// Handle a new message pushed from the EventSource
+var handleNewMessage = function (message) {
+  if (message.event == "newTerms") {
+    var flashMessage = "The new terms being filtered on are: " + message.terms.join(", ");
+    console.log(flashMessage);
+    flashStatus(flashMessage);
+    cleanSlateWithTerms(message.terms);
+  } else {
+    console.log("New status received");
+    // Initial bootstrap in case there already is a stream
+    if (typeof(currentTerms) === "undefined") {
+      cleanSlateWithTerms(message.currentTerms);
+    }
+    var tweet = message.status;
+    prependToStatusList(tweet.userName, tweet.userImage, tweet.text, tweet.createdAt);
+    incrementChartData($(relevantIds.graph).highcharts());
   }
 };
 
@@ -82,55 +127,51 @@ var setUpChart = function (terms){
   });
 };
 
-$(relevantIds.goForm).submit(function(event) {
-  if(typeof(EventSource)!=="undefined")
-  {
-    var termsList = $(relevantIds.termsList).val();
+// Connect to the event source if the browser supports it
+if (typeof(EventSource) !== "undefined") {
+  var currentEventSource = new EventSource("/connect");
 
-    // Just in case, cleanup
-    if (typeof(currentEventSource)!=="undefined"){
+  // Setup listeners on the EventSource
+  currentEventSource.addEventListener('open', function (e) {
+    console.log("Connection opened");
+  }, false);
+
+  currentEventSource.addEventListener('message', function (e) {
+    var message = JSON.parse(e.data);
+    handleNewMessage(message);
+  }, false);
+
+  currentEventSource.addEventListener('error', function (e) {
+    if (e.readyState == EventSource.CLOSED) {
       $(relevantIds.statusList).empty();
-      currentEventSource.close();
+      alert("Your connection was closed");
+    } else {
+      alert("An unknown error occured");
     }
+  }, false);
 
-    // Set up the chart and remove the form
-    setUpChart(termsList);
-    $(relevantIds.goForm).remove();
+  // Just some small cleanup
+  window.onbeforeunload = function(){
+    console.log('Closing connection on reload');
+    currentEventSource.close();
+  };
+} else {
+  alert("Sorry this site requires a real browser. Please try Chrome, Firefox, or Safari.");
+}
 
-    currentEventSource = new EventSource("/filterStream/" + termsList);
-
-    // Setup listeners on the EventSource
-    currentEventSource.addEventListener('open', function (e) {
-      console.log("Connection opened");
-    }, false);
-
-    currentEventSource.addEventListener('message', function (e) {
-      var data = JSON.parse(e.data);
-      var tweet = data.status;
-      console.log("New status received");
-      prependToStatusList(tweet.userName, tweet.userImage, tweet.text, tweet.createdAt);
-      incrementChartData($(relevantIds.graph).highcharts());
-    }, false);
-
-    currentEventSource.addEventListener('error', function (e) {
-      if (e.readyState == EventSource.CLOSED) {
-        $(relevantIds.statusList).empty();
-        alert("Your connection was closed");
-      } else {
-        alert("An unknown error occured");
-      }
-    }, false);
-
-    window.onbeforeunload = function(){
-      console.log('Closing connection on reload');
-      currentEventSource.close();
-    };
-
-  }
-  else
-  {
-    alert("Sorry it doesn't look like your browser supports server-sent events");
-  }
+// Override the submit form and prevent default behaviour
+$(relevantIds.goForm).submit(function(event) {
+  var termsList = $(relevantIds.termsList).val();
+  $.ajax({
+    url: '/new_terms/' + termsList,
+    type: 'PUT',
+    success: function(data) {
+      console.log("New terms PUT successfully")
+    },
+    error: function () {
+      console.log("Failed to PUT new terms")
+    }
+  });
   event.preventDefault();
 });
 
