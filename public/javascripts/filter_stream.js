@@ -1,17 +1,17 @@
 $(function() {
 
 Highcharts.setOptions({
-    global: {
-        useUTC: false
-    }
+  global: {
+     useUTC: false
+  }
 });
 
 var relevantIds = {
-    status: "#status",
-    termsList: "#termsList",
-    statusList: "#statusList",
-    graph: "#graph",
-    goForm: "#goForm"
+ status: "#status",
+ termsList: "#termsList",
+ statusList: "#statusList",
+ graph: "#graph",
+ goForm: "#goForm"
 };
 
 // Clears the status list
