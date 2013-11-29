@@ -17,7 +17,7 @@ var relevantIds = {
 // Clears the status list
 var clearStatusList = function() {
  $(relevantIds.statusList).empty();
-}
+};
 
 // current terms being looked at
 var currentTerms = undefined;
@@ -63,7 +63,7 @@ var flashStatus = function (message) {
   var statusDiv = $(relevantIds.status);
   statusDiv.find('span#msg').html(message);
   statusDiv.show(250).fadeOut(4000);
-}
+};
 
 // Handle a new message pushed from the EventSource
 var handleNewMessage = function (message) {
