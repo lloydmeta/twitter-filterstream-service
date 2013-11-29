@@ -17,7 +17,7 @@ Languages / Libraries / frameworks used:
 Description
 -------
 
-Deployed on Heroku at [twitter-filterstream.herokuapp.com/](http://twitter-filterstream.herokuapp.com/).
+Deployed on Heroku at [twitter-filterstream.herokuapp.com](http://twitter-filterstream.herokuapp.com/)
 
 At the main page, enter a comma-separated list of terms, click go and tweets that have any one of those words will appear and be counted in the graph. Anyone visiting the site is looking at the same stream. Changing the terms will change the stream for all visitors.
 
