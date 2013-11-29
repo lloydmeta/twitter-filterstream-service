@@ -8,7 +8,7 @@ import play.api.test.Helpers._
 @RunWith(classOf[JUnitRunner])
 class ApplicationSpec extends Specification {
 
-  "Application" should {
+  "FilterStreamRoom" should {
 
     "send 404 on a bad request" in new WithApplication{
       route(FakeRequest(GET, "/boum")) must beNone
@@ -20,6 +20,11 @@ class ApplicationSpec extends Specification {
       status(home) must equalTo(OK)
       contentType(home) must beSome.which(_ == "text/html")
       contentAsString(home) must contain ("Twitter")
+    }
+
+    "register a new set of terms to track" in new WithApplication{
+      val newTerms = route(FakeRequest(PUT, "/new_terms/web,application")).get
+      status(newTerms) must equalTo(OK)
     }
   }
 }
