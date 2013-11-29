@@ -140,10 +140,4 @@ class FilterStreamRoom extends Actor {
     )
   }
 
-
 }
-
-sealed case class Connect()
-sealed case class Connected(enumerator: Enumerator[JsValue])
-sealed case class NewTerms(terms: List[String])
-sealed case class GetCurrentTerms()
