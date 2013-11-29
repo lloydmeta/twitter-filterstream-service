@@ -34,7 +34,7 @@ object FilterStreamRoom {
    * Returns a future enumerator for pushing events
    * @return Future[Enumerator[JsValue]]
    */
-  def connect: Future[Enumerator[JsValue]] = ( default ? Connect).map {
+  def connect: Future[Enumerator[JsValue]] = (default ? Connect).map {
     case Connected(enumerator) => enumerator
     case _ => throw new RuntimeException("Connect failed")
   }
