@@ -1,4 +1,4 @@
-Twitter-filterstream-service
+Twitter-filterstream-service [![Build Status](https://travis-ci.org/lloydmeta/twitter-filterstream-service.png?branch=master)](https://travis-ci.org/lloydmeta/twitter-filterstream-service)
 ============================
 
 Demo Scala application from a combination of:
