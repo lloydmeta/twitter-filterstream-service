@@ -10,7 +10,9 @@ libraryDependencies ++= Seq(
   jdbc,
   anorm,
   "com.beachape.twitterFilterStream" %% "twitter-filterstream" % "0.0.1-SNAPSHOT",
-   "com.newrelic.agent.java" % "newrelic-agent" % "3.1.1",
+  "com.newrelic.agent.java" % "newrelic-agent" % "3.1.1",
+  "com.typesafe.akka" %% "akka-testkit" % "2.2.1" % "test",
+  "org.scalatest" %% "scalatest" % "2.0" % "test",
   cache
 )
 
