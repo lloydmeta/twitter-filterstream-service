@@ -1,12 +1,12 @@
 package models
 
-import play.api.libs.iteratee.{Enumeratee, Enumerator, Iteratee, Concurrent}
+import play.api.libs.iteratee.{Enumerator, Concurrent}
 import play.libs.Akka
 import twitter4j.Status
 import com.beachape.twitterFilterStream.{FilterStreamActor, TwitterConfig}
-import akka.actor.{Props, ActorRef, Actor, PoisonPill}
+import akka.actor.{Props, ActorRef, Actor}
 import akka.pattern.{gracefulStop, ask}
-import play.api.libs.json.{JsObject, Json, JsValue}
+import play.api.libs.json.{Json, JsValue}
 import scala.concurrent.{ExecutionContext, Await, Future}
 import play.api.Play
 import scala.concurrent.duration._
