@@ -11,7 +11,7 @@ Languages / Libraries / frameworks used:
 - Akka
 - Play 2
 - Twitter Bootstrap
-- [twitter-filterstream](https://github.com/lloydmeta/twitter-filterstream), which inherently wraps Twitter4J
+- [twitter-filterstream](https://github.com/lloydmeta/twitter-filterstream), which wraps Twitter4J
 - Javascript (w/ JQuery + Highcharts)
 
 Description
