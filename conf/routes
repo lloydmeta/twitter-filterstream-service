@@ -10,4 +10,6 @@ GET     /assets/*file               controllers.Assets.at(path="/public", file)
 
 GET     /connect                    controllers.Application.connect
 
-PUT     /new_terms/:terms           controllers.Application.newTerms(terms: String)
+PUT     /new_terms/:terms           controllers.Application.newTerms(terms)
+
+GET     /demo/:pathParam   controllers.Application.demo(pathParam)
